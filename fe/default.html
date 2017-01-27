@@ -1,0 +1,65 @@
+<div class="jumbotron">
+    <div class="container-fluid">
+        <h1 ng-bind="sysInfo.title"></h1>
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <p><span id="dateStr" class="label label-info"></span></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-3" ui-sref="edit({id:21})">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" ng-bind="posName.p21"></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p ng-bind="'模式：' + funcName[switchStat.m21]"></p>
+                        <p ng-bind="switchStat.s21 ? '状态：打开' : '状态：关闭'"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3" ui-sref="edit({id:22})">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" ng-bind="posName.p22"></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p ng-bind="'模式：' + funcName[switchStat.m22]"></p>
+                        <p ng-bind="switchStat.s22 ? '状态：打开' : '状态：关闭'"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3" ui-sref="edit({id:11})">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" ng-bind="posName.p11"></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p ng-bind="'模式：' + funcName[switchStat.m11]"></p>
+                        <p ng-bind="switchStat.s11 ? '状态：打开' : '状态：关闭'"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3" ui-sref="edit({id:12})">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" ng-bind="posName.p12"></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p ng-bind="'模式：' + funcName[switchStat.m12]"></p>
+                        <p ng-bind="switchStat.s12 ? '状态：打开' : '状态：关闭'"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function getLangDate() {
+        var dateObj = new Date(), month = dateObj.getMonth() + 1, date = dateObj.getDate(), weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], hour = dateObj.getHours(), minute = dateObj.getMinutes(), second = dateObj.getSeconds();
+        if (document.getElementById("dateStr") === null) return;
+        document.getElementById("dateStr").innerHTML = dateObj.getFullYear() + "年" + (month < 10 ? "0" + month : month) + "月" + (date < 10 ? "0" + date : date) + "日 " + weeks[dateObj.getDay()] + " " + (hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" + minute : minute) + ":" + (second < 10 ? "0" + second : second);
+        setTimeout("getLangDate()", 1000);
+    }
+    getLangDate();
+</script>
