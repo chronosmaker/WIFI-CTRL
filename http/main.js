@@ -70,7 +70,7 @@ app.run(function($rootScope, $http, $state) {
 		$rootScope.page = url;
 		$state.go(url);
     };
-    $http.post("/init").then(function(res) {
+    $http.post("/initSys.lc").then(function(res) {
         $rootScope.switchStat = res.data;
     }).catch();
 });
@@ -79,7 +79,7 @@ var appCtrls = angular.module('appCtrls', []);
 
 appCtrls.controller('manualCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
     $scope.switchIO = function(id, stat) {
-        $http.post("/switch?id=" + id + "&stat=" + stat).then(function(res) {
+        $http.post("/switch.lc?id=" + id + "&stat=" + stat).then(function(res) {
             var msg = res.data.msg;
             if (msg == '200') {
                 $rootScope.switchStat[id] = stat;

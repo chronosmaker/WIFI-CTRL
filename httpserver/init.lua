@@ -124,3 +124,54 @@ if (wifi.getmode() == wifi.STATION) or (wifi.getmode() == wifi.STATIONAP) then
 else
    startServer()
 end
+
+-- 开关引脚定义
+pin = {
+    s21 = 1,
+    s22 = 2,
+    s11 = 3,
+    s12 = 4
+}
+
+-- 开关控制
+switch = function(pos, stat)
+    gpio.mode(pin[pos],gpio.OUTPUT)
+    if stat == "1" then
+        gpio.write(pin[pos],gpio.LOW)
+    else
+        gpio.write(pin[pos],gpio.HIGH)
+    end
+end
+
+-- 获取系统状态
+readStat = function()
+    fd = file.open("http/dataStatus.json", "r")
+    if fd then
+        local json = fd:readline()
+        fd:close(); fd = nil
+        return json
+    end
+    return ""
+end
+
+-- 更新系统状态
+updateStat = function(json)
+    fd = file.open("http/dataStatus.json", "w+")
+    if fd then
+        fd:write(json)
+        fd:close(); fd = nil
+    end
+end
+
+-- 系统初始化
+initSys = function()
+    local stat = readStat()
+    local table = cjson.decode(stat)
+    switch("s21",table.s21)
+    switch("s22",table.s22)
+    switch("s11",table.s11)
+    switch("s12",table.s12)
+end
+
+-- 执行初始化
+initSys()
