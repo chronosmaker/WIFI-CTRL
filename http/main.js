@@ -45,7 +45,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             url: '/edit/:id',
             views: {
                 'body': {
-                    templateUrl: 'edit.html'
+                    templateUrl: 'edit.html',
+                    controller: 'editCtrl'
                 }
             }
         });
@@ -78,6 +79,18 @@ app.run(function($rootScope, $http, $state) {
 var appCtrls = angular.module('appCtrls', []);
 
 appCtrls.controller('manualCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+    $scope.switchIO = function(id, stat) {
+        $http.post("/switch.lc?id=" + id + "&stat=" + stat).then(function(res) {
+            var msg = res.data.msg;
+            if (msg == '200') {
+                $rootScope.switchStat[id] = stat;
+            }
+        }).catch();
+    };
+}]);
+
+appCtrls.controller('editCtrl', ['$rootScope', '$scope', '$http', '$stateParams', function($rootScope, $scope, $http, $stateParams) {
+    $scope.pos = $stateParams.id;
     $scope.switchIO = function(id, stat) {
         $http.post("/switch.lc?id=" + id + "&stat=" + stat).then(function(res) {
             var msg = res.data.msg;
