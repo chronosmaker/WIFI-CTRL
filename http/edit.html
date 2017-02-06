@@ -5,30 +5,17 @@
                 <button type="button" class="btn btn-info btn-sm pull-left btn-back" ng-click="goPage('default')">返回</button>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title text-center" ng-bind="posName[pos]"></h3>
+                        <h3 class="panel-title text-center" ng-bind="nodeInfo[node].name"></h3>
                     </div>
                     <div class="panel-body">
                         <ul class="nav nav-tabs">
-                            <li role="presentation" ng-class="{'active': showFunc == 'f1'}"><a ng-click="changeFunc('f1')" ng-bind="funcName['f1']"></a></li>
-                            <li role="presentation" ng-class="{'active': showFunc == 'f2'}"><a ng-click="changeFunc('f2')" ng-bind="funcName['f2']"></a></li>
-                            <li role="presentation" ng-class="{'active': showFunc == 'f3'}"><a ng-click="changeFunc('f3')" ng-bind="funcName['f3']"></a></li>
+                            <li role="presentation" ng-class="{'active': showFunc == 'f1'}"><a ng-click="changeFunc('f1')" ng-bind="sysInfo.funcName.f1"></a></li>
+                            <li role="presentation" ng-class="{'active': showFunc == 'f2'}"><a ng-click="changeFunc('f2')" ng-bind="sysInfo.funcName.f2"></a></li>
+                            <li role="presentation" ng-class="{'active': showFunc == 'f3'}"><a ng-click="changeFunc('f3')" ng-bind="sysInfo.funcName.f3"></a></li>
                         </ul>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="col-xs-6">
-                                            <p ng-bind="posName.p21"></p>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <input class="btn btn-primary" ng-class="{'active': switchStat.s21}" type="button" ng-click="switchIO('s21', '1')" value="打开">
-                                                <input class="btn btn-primary" ng-class="{'active':!switchStat.s21}" type="button" ng-click="switchIO('s21', '0')" value="关闭">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="btn-group" data-toggle="buttons" ng-if="showFunc == 'f1'" style="padding:20px;width:100%;border:1px solid #ddd;border-top:0">
+                            <input class="btn btn-primary" ng-class="{'active':nodeInfo[node].status == '0'}" type="button" ng-click="switchIO(node, '0')" value="打开">
+                            <input class="btn btn-primary" ng-class="{'active':nodeInfo[node].status == '1'}" type="button" ng-click="switchIO(node, '1')" value="关闭">
                         </div>
                     </div>
                 </div>

@@ -17,8 +17,8 @@ wifiConfig.accessPointIpConfig.netmask = "255.255.255.0"
 wifiConfig.accessPointIpConfig.gateway = "192.168.111.1"
 
 wifiConfig.stationPointConfig = {}
--- wifiConfig.stationPointConfig.ssid = "CHRONOS"        -- Name of the WiFi network you want to join
-wifiConfig.stationPointConfig.ssid = "ITC"        -- Name of the WiFi network you want to join
+wifiConfig.stationPointConfig.ssid = "CHRONOS"        -- Name of the WiFi network you want to join
+-- wifiConfig.stationPointConfig.ssid = "ITC"        -- Name of the WiFi network you want to join
 wifiConfig.stationPointConfig.pwd =  "8506923298"                -- Password for the WiFi network
 
 wifiConfig.stationPointIpConfig = {}
@@ -131,8 +131,10 @@ switch = function(pin, stat)
     gpio.mode(pin,gpio.OUTPUT)
     if stat == "1" then
         gpio.write(pin,gpio.HIGH)
+        print("GPIO_HIGH: ", pin)
     else
         gpio.write(pin,gpio.LOW)
+        print("GPIO_LOW: ", pin)
     end
 end
 
@@ -140,28 +142,30 @@ end
 readStat = function()
     fd = file.open("http/dataStatus.json", "r")
     if fd then
-        local json = {};
-        json[1] = cjson.decode(fd:readline())
-        for i = 1,json[1].node do
-            json[i+1] = cjson.decode(fd:readline())
+        local data = {};
+        data[1] = cjson.decode(fd:readline())
+        for i = 1,data[1].node do
+            data[i+1] = cjson.decode(fd:readline())
         end
         fd:close(); fd = nil
-        return json
+        return data
     end
     return ""
 end
 
 -- 更新系统状态
-updateStat = function(json,index)
-    fd = file.open("http/dataStatus.json", "r+")
+updateStat = function(data)
+    fd = file.open("http/dataStatus.json", "w+")
     if fd then
-        fd:write(json)
+        for i = 0,data[1].node do
+            fd:writeline(cjson.encode(data[i+1]))
+        end
         fd:close(); fd = nil
     end
 end
 
 -- 系统初始化
-initSys = function()
+local initSys = function()
     local data = readStat()
     for i = 1,data[1].node do
         switch(data[i+1].pin,data[i+1].status)
