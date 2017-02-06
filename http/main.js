@@ -52,38 +52,25 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         });
 });
 app.run(function($rootScope, $http, $state) {
-    $rootScope.sysInfo = {
-        title: '中央空调控制中心'
-    };
-    $rootScope.posName = {
-        p21: '二楼东侧',
-        p22: '二楼西侧',
-        p11: '一楼东侧',
-        p12: '一楼西侧'
-    };
-    $rootScope.funcName = {
-        f1: '手动控制',
-        f2: '定时开关',
-        f3: '延时开关'
-    };
     $rootScope.page = 'default';
     $rootScope.goPage = function (url) {
 		$rootScope.page = url;
 		$state.go(url);
     };
     $http.post("/initSys.lc").then(function(res) {
-        $rootScope.switchStat = res.data;
+        //console.log(res);
+        $rootScope.sysInfo = res.data[0];
+        $rootScope.nodeInfo = res.data.splice(1,4);
     }).catch();
 });
 
 var appCtrls = angular.module('appCtrls', []);
 
 appCtrls.controller('manualCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
-    $scope.switchIO = function(id, stat) {
-        $http.post("/switch.lc?id=" + id + "&stat=" + stat).then(function(res) {
-            var msg = res.data.msg;
-            if (msg == '200') {
-                $rootScope.switchStat[id] = stat;
+    $scope.switchIO = function(index, stat) {
+        $http.post("/switch.lc?id=" + $rootScope.nodeInfo[index].id + "&stat=" + stat).then(function(res) {
+            if (res.data.msg == '200') {
+                $rootScope.nodeInfo[index].status = stat;
             }
         }).catch();
     };
@@ -91,12 +78,16 @@ appCtrls.controller('manualCtrl', ['$rootScope', '$scope', '$http', function($ro
 
 appCtrls.controller('editCtrl', ['$rootScope', '$scope', '$http', '$stateParams', function($rootScope, $scope, $http, $stateParams) {
     $scope.pos = $stateParams.id;
-    $scope.switchIO = function(id, stat) {
-        $http.post("/switch.lc?id=" + id + "&stat=" + stat).then(function(res) {
-            var msg = res.data.msg;
-            if (msg == '200') {
-                $rootScope.switchStat[id] = stat;
-            }
-        }).catch();
+    if ($scope.pos == 'p21') {
+        $scope.showFunc = $rootScope.switchStat.m21;
+    } else if ($scope.pos == 'p22') {
+        $scope.showFunc = $rootScope.switchStat.m22;
+    } else if ($scope.pos == 'p11') {
+        $scope.showFunc = $rootScope.switchStat.m11;
+    } else if ($scope.pos == 'p12') {
+        $scope.showFunc = $rootScope.switchStat.m12;
+    }
+    $scope.changeFunc = function(func) {
+        $scope.showFunc = func;
     };
 }]);

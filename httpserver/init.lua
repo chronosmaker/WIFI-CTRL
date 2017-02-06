@@ -17,7 +17,8 @@ wifiConfig.accessPointIpConfig.netmask = "255.255.255.0"
 wifiConfig.accessPointIpConfig.gateway = "192.168.111.1"
 
 wifiConfig.stationPointConfig = {}
-wifiConfig.stationPointConfig.ssid = "CHRONOS"        -- Name of the WiFi network you want to join
+-- wifiConfig.stationPointConfig.ssid = "CHRONOS"        -- Name of the WiFi network you want to join
+wifiConfig.stationPointConfig.ssid = "ITC"        -- Name of the WiFi network you want to join
 wifiConfig.stationPointConfig.pwd =  "8506923298"                -- Password for the WiFi network
 
 wifiConfig.stationPointIpConfig = {}
@@ -125,21 +126,13 @@ else
    startServer()
 end
 
--- 开关引脚定义
-pin = {
-    s21 = 1,
-    s22 = 2,
-    s11 = 3,
-    s12 = 4
-}
-
 -- 开关控制
-switch = function(pos, stat)
-    gpio.mode(pin[pos],gpio.OUTPUT)
+switch = function(pin, stat)
+    gpio.mode(pin,gpio.OUTPUT)
     if stat == "1" then
-        gpio.write(pin[pos],gpio.LOW)
+        gpio.write(pin,gpio.HIGH)
     else
-        gpio.write(pin[pos],gpio.HIGH)
+        gpio.write(pin,gpio.LOW)
     end
 end
 
@@ -147,7 +140,11 @@ end
 readStat = function()
     fd = file.open("http/dataStatus.json", "r")
     if fd then
-        local json = fd:readline()
+        local json = {};
+        json[1] = cjson.decode(fd:readline())
+        for i = 1,json[1].node do
+            json[i+1] = cjson.decode(fd:readline())
+        end
         fd:close(); fd = nil
         return json
     end
@@ -155,8 +152,8 @@ readStat = function()
 end
 
 -- 更新系统状态
-updateStat = function(json)
-    fd = file.open("http/dataStatus.json", "w+")
+updateStat = function(json,index)
+    fd = file.open("http/dataStatus.json", "r+")
     if fd then
         fd:write(json)
         fd:close(); fd = nil
@@ -165,12 +162,10 @@ end
 
 -- 系统初始化
 initSys = function()
-    local stat = readStat()
-    local table = cjson.decode(stat)
-    switch("s21",table.s21)
-    switch("s22",table.s22)
-    switch("s11",table.s11)
-    switch("s12",table.s12)
+    local data = readStat()
+    for i = 1,data[1].node do
+        switch(data[i+1].pin,data[i+1].status)
+    end
 end
 
 -- 执行初始化

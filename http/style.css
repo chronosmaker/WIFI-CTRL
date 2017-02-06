@@ -24,3 +24,7 @@ body {
     margin-bottom: 0!important;
     line-height: 34px
 }
+
+.nav-tabs a {
+	cursor: pointer;
+}

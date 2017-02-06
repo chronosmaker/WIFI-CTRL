@@ -9,9 +9,9 @@
                     </div>
                     <div class="panel-body">
                         <ul class="nav nav-tabs">
-                            <li role="presentation" class="active"><a href="#">手动控制</a></li>
-                            <li role="presentation"><a href="#">Profile</a></li>
-                            <li role="presentation"><a href="#">Messages</a></li>
+                            <li role="presentation" ng-class="{'active': showFunc == 'f1'}"><a ng-click="changeFunc('f1')" ng-bind="funcName['f1']"></a></li>
+                            <li role="presentation" ng-class="{'active': showFunc == 'f2'}"><a ng-click="changeFunc('f2')" ng-bind="funcName['f2']"></a></li>
+                            <li role="presentation" ng-class="{'active': showFunc == 'f3'}"><a ng-click="changeFunc('f3')" ng-bind="funcName['f3']"></a></li>
                         </ul>
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
@@ -23,52 +23,7 @@
                                         <div class="col-xs-6">
                                             <div class="btn-group" data-toggle="buttons">
                                                 <input class="btn btn-primary" ng-class="{'active': switchStat.s21}" type="button" ng-click="switchIO('s21', '1')" value="打开">
-                                                <input class="btn btn-primary" ng-class="{'active':!switchStat.s21}" type="button" ng-click="switchIO('s21', '')" value="关闭">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-md-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="col-xs-6">
-                                            <p ng-bind="posName.p22"></p>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <input class="btn btn-primary" ng-class="{'active': switchStat.s22}" type="button" ng-click="switchIO('s22', '1')" value="打开">
-                                                <input class="btn btn-primary" ng-class="{'active':!switchStat.s22}" type="button" ng-click="switchIO('s22', '')" value="关闭">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-md-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="col-xs-6">
-                                            <p ng-bind="posName.p11"></p>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <input class="btn btn-primary" ng-class="{'active': switchStat.s11}" type="button" ng-click="switchIO('s11', '1')" value="打开">
-                                                <input class="btn btn-primary" ng-class="{'active':!switchStat.s11}" type="button" ng-click="switchIO('s11', '')" value="关闭">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-md-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="col-xs-6">
-                                            <p ng-bind="posName.p12"></p>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <input class="btn btn-primary" ng-class="{'active': switchStat.s12}" type="button" ng-click="switchIO('s12', '1')" value="打开">
-                                                <input class="btn btn-primary" ng-class="{'active':!switchStat.s12}" type="button" ng-click="switchIO('s12', '')" value="关闭">
+                                                <input class="btn btn-primary" ng-class="{'active':!switchStat.s21}" type="button" ng-click="switchIO('s21', '0')" value="关闭">
                                             </div>
                                         </div>
                                     </div>
