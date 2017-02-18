@@ -1,0 +1,85 @@
+<div class="jumbotron">
+    <div class="container-fluid">
+        <h1>电机控制中心</h1>
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <p><span id="dateStr" class="label label-info"></span></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-3" ng-repeat="pd in node">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" ng-bind="pd.n"></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p>是否启动</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <input class="btn btn-primary" ng-class="{'active':pd.s == '1'}" type="button" ng-click="stepStatus($index, '1')" value="是">
+                                    <input class="btn btn-primary" ng-class="{'active':pd.s == '0'}" type="button" ng-click="stepStatus($index, '0')" value="否">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="pd.s == '1'">
+                            <div class="col-xs-6">
+                                <p>输入总价</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <input type="number" class="form-control" ng-model="pd.t">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="pd.s == '1'">
+                            <div class="col-xs-6">
+                                <p>输入单价</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <input type="number" class="form-control" ng-model="pd.p">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="pd.s == '1'">
+                            <div class="col-xs-6">
+                                <p>计算数量</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <p>{{pd.t/pd.p | number:2}} L</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <p>
+                    <button type="button" class="btn btn-primary btn-lg" ng-click="run()">启动</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function getLangDate() {
+        var dateObj = new Date(),
+            month = dateObj.getMonth() + 1,
+            date = dateObj.getDate(),
+            weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+            hour = dateObj.getHours(),
+            minute = dateObj.getMinutes(),
+            second = dateObj.getSeconds();
+        if (document.getElementById("dateStr") === null) return;
+        document.getElementById("dateStr").innerHTML = dateObj.getFullYear() + "年" + (month < 10 ? "0" + month : month) + "月" + (date < 10 ? "0" + date : date) + "日 " + weeks[dateObj.getDay()] + " " + (hour < 10 ? "0" + hour : hour) + ":" + (minute <
+            10 ? "0" + minute : minute) + ":" + (second < 10 ? "0" + second : second);
+        setTimeout("getLangDate()", 1000);
+    }
+    getLangDate();
+</script>

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'appCtrls']);
+var app = angular.module('app', ['ui.router', 'appCtrls', 'appDires']);
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};
@@ -48,33 +48,58 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
                     controller: 'editCtrl'
                 }
             }
+        })
+        .state('step', {
+            url: '/step',
+            views: {
+                'body': {
+                    templateUrl: 'step.html',
+                    controller: 'stepCtrl'
+                }
+            }
         });
 });
-app.run(function($rootScope, $http, $state) {
-    $http.post("/initSys.lc").then(function(res) {
-        $rootScope.sysInfo = res.data[0];
-        $rootScope.nodeInfo = res.data.splice(1,4);
-    }).catch();
-    $rootScope.page = 'default';
-    $rootScope.goPage = function (url) {
-		$rootScope.page = url;
-		$state.go(url);
-    };
-    $rootScope.switchIO = function(index, stat) {
-        $http.post("/switch.lc?id=" + $rootScope.nodeInfo[index].id + "&stat=" + stat).then(function(res) {
-            if (res.data.msg == '200') {
-                $rootScope.nodeInfo[index].status = stat;
-            }
-        }).catch();
+
+app.run(function($rootScope, $state) {
+    $rootScope.sysInfo = {};
+    $rootScope.goPage = function(url) {
+        $rootScope.page = url;
+        $state.go(url);
     };
 });
 
-var appCtrls = angular.module('appCtrls', []);
+var appDires = angular.module('appDires', []);
 
-appCtrls.controller('editCtrl', ['$rootScope', '$scope', '$http', '$stateParams', function($rootScope, $scope, $http, $stateParams) {
-    $scope.node = parseInt($stateParams.id);
-    $scope.showFunc = $rootScope.nodeInfo[$scope.node].mode;
-    $scope.changeFunc = function(func) {
-        $scope.showFunc = func;
+appDires.directive('navAir', ['$rootScope', '$http', '$state', function($rootScope, $http, $state) {
+    return {
+        restrict: 'EA',
+        replace: true,
+        scope: false,
+        templateUrl: 'navAir.html',
+        link: function() {
+            // $http.post("/initSys.lc").then(function(res) {
+            //     $rootScope.sysInfo = res.data[0];
+            //     $rootScope.nodeInfo = res.data.splice(1, 4);
+            // }).catch();
+            // $rootScope.switchIO = function(index, stat) {
+            //     $http.post("/switch.lc?id=" + $rootScope.nodeInfo[index].id + "&stat=" + stat).then(function(res) {
+            //         if (res.data.msg == '200') {
+            //             $rootScope.nodeInfo[index].status = stat;
+            //         }
+            //     }).catch();
+            // };
+        }
+    };
+}]);
+
+appDires.directive('navStep', ['$rootScope', '$http', '$state', function($rootScope, $http, $state) {
+    return {
+        restrict: 'EA',
+        replace: true,
+        scope: false,
+        templateUrl: 'navStep.html',
+        link: function(){
+            $rootScope.goPage('step');
+        }
     };
 }]);

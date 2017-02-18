@@ -17,8 +17,8 @@ wifiConfig.accessPointIpConfig.netmask = "255.255.255.0"
 wifiConfig.accessPointIpConfig.gateway = "192.168.111.1"
 
 wifiConfig.stationPointConfig = {}
-wifiConfig.stationPointConfig.ssid = "CHRONOS"        -- Name of the WiFi network you want to join
--- wifiConfig.stationPointConfig.ssid = "ITC"        -- Name of the WiFi network you want to join
+-- wifiConfig.stationPointConfig.ssid = "CHRONOS"        -- Name of the WiFi network you want to join
+wifiConfig.stationPointConfig.ssid = "ITC"        -- Name of the WiFi network you want to join
 wifiConfig.stationPointConfig.pwd =  "8506923298"                -- Password for the WiFi network
 
 wifiConfig.stationPointIpConfig = {}
@@ -173,4 +173,26 @@ local initSys = function()
 end
 
 -- 执行初始化
-initSys()
+-- initSys()
+
+runStep = {}
+runStep.m1 = {}
+runStep.m2 = {}
+runStep.m3 = {}
+runStep.m4 = {}
+runStep.m5 = {}
+runStep.m1.p = 1
+runStep.m2.p = 2
+runStep.m3.p = 3
+runStep.m4.p = 4
+runStep.m5.p = 5
+runStep.m1.s = '0'
+runStep.m2.s = '0'
+runStep.m3.s = '0'
+runStep.m4.s = '0'
+runStep.m5.s = '0'
+runStep.m1.r = 0
+runStep.m2.r = 0
+runStep.m3.r = 0
+runStep.m4.r = 0
+runStep.m5.r = 0
