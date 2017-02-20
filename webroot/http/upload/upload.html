@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="http://192.168.1.110:666/step/css/upload.css">
+	</head>
+	<body>
+		<div id="dropbox" class="dropBox">
+			<div id="upload">
+				<div id="drop">Drop Here
+					<a onclick='document.getElementById("browseInput").click();'>Browse</a><a onclick='UploadFiles();'>Upload</a>
+					<input id="browseInput" type="file" name="upl" onchange="handleFiles(this.files);" multiple />
+				</div>
+				<ul id="fileList"></ul>
+				<div class="fileInfo">Files on device:</div>
+				<ul id="fileInfo"></ul>
+			</div>
+		</div>
+	</body>
+	<script src="http://192.168.1.110:666/step/js/upload.js"></script>
+</html>
