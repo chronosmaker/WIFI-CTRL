@@ -7,11 +7,17 @@
 
 <script>
 import header from './component/header.vue'
-
 export default {
     name: 'app',
     components: {
         'v-header': header
+    },
+    created: function() {
+        this.$http.get('/system.json').then(function(response) {
+            this.$store.commit('UPDATE_SYSINFO', response.data);
+        }, function(response) {
+            console.log(response)
+        });
     }
 }
 </script>

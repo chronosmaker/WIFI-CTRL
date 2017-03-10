@@ -3,7 +3,7 @@
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <span class="navbar-brand">{{title}}</span>
+                <span class="navbar-brand">{{headerTitle}}</span>
             </div>
         </div>
     </nav>
@@ -11,17 +11,18 @@
 </template>
 
 <script type="text/javascript">
+import { mapState } from 'vuex';
 export default {
-    data() {
-        return {
-            title: "胡子集团"
-        }
+    computed: {
+        ...mapState([
+            'headerTitle'
+        ])
     }
 }
 </script>
 
 <style media="screen">
-    #header {
-        height: 20px
-    }
+#header {
+    height: 20px
+}
 </style>

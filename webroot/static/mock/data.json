@@ -1,0 +1,43 @@
+{
+    "system.json": {
+        "title": "系统控制中心",
+        "author": "时光之末",
+        "func": [{
+            "id": "f1",
+            "name": "手动控制"
+        }, {
+            "id": "f2",
+            "name": "定时开关"
+        }, {
+            "id": "f3",
+            "name": "延时开关"
+        }]
+    },
+    "user.json": {
+        "node": [{
+            "id": "n1",
+            "name": "客厅灯",
+            "mode": "f1",
+            "status": "1",
+            "pin": "1"
+        }, {
+            "id": "n2",
+            "name": "卧室灯",
+            "mode": "f2",
+            "status": "1",
+            "pin": "2"
+        }, {
+            "id": "n3",
+            "name": "走廊灯",
+            "mode": "f3",
+            "status": "1",
+            "pin": "3"
+        }, {
+            "id": "n4",
+            "name": "饮水机",
+            "mode": "f1",
+            "status": "0",
+            "pin": "4"
+        }]
+    }
+}
