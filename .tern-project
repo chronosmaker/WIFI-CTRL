@@ -7,7 +7,6 @@
     "plugins": {
         "complete_strings": {
             "maxLength": 15
-        },
-        "angular": {}
+        }
     }
 }
